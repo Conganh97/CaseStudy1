@@ -21,8 +21,6 @@ height
         this.image = image
     }
     draw(){
-    // c.fillStyle = 'blue'
-    //     c.fillRect(this.x,this.y,this.width,this.height)
         c.drawImage(this.image,this.x,this.y)
     }
 }
@@ -44,7 +42,7 @@ class Player {
         this.radius = 15
         this.radians = 0.75
         this.openRate = 0.12
-        this.rotation
+        this.rotation = 0
     }
     draw(){
         c.save()
@@ -158,6 +156,11 @@ const keys = {
         pressed: false
     }
 }
+addEventListener('keydown',musisPlay)
+function musisPlay(){
+    document.getElementById('start').play()
+    removeEventListener('keydown', musisPlay)
+}
 
 let lastKey = ''
 let score = 0
@@ -165,7 +168,7 @@ let score = 0
 // tạo map từ mảng
 const map = [
     ['1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2'],
-    ['|', '.', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
+    ['|', ' ', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
     ['|', '.', 'b', '.', '[', '7', ']', '.', 'b', '.', '|'],
     ['|', '.', '.', '.', '.', '_', '.', '.', '.', '.', '|'],
     ['|', '.', '[', ']', '.', '.', '.', '[', ']', '.', '|'],
@@ -309,10 +312,12 @@ function animate () {
         let check = Math.hypot((player.x - ghost.x), (player.y - ghost.y));
         if ((check - player.radius - ghost.radius) < 1 ) {
             if (ghost.scared ) {
+                document.getElementById('eatghost').play()
                 ghosts.splice(i,1)
                 score += 100
                 scoreEl.innerHTML = score
             } else {
+                document.getElementById('lose').play()
             cancelAnimationFrame(animationId)
             alert('You lose')
             }
@@ -320,6 +325,7 @@ function animate () {
     }
 // check win
     if (pellets.length === 0 ){
+        document.getElementById('win').play()
         alert('You win')
     cancelAnimationFrame(animationId)}
 // vẽ power up và ăn
@@ -328,6 +334,7 @@ function animate () {
         powerUp.draw()
         let check = Math.hypot((player.x - powerUp.x), (player.y - powerUp.y));
         if ((check - player.radius - powerUp.radius) < 1) {
+            document.getElementById('power').play()
             powerUps.splice(i, 1)
             score += 50
             scoreEl.innerHTML = score
@@ -337,7 +344,7 @@ function animate () {
                 ghost.scared = true
                 setTimeout(() =>{
                     ghost.scared = false
-                }, 5000)
+                }, 3000)
             })
         }
     }
@@ -349,6 +356,7 @@ function animate () {
         let check = Math.hypot((player.x - pellet.x), (player.y - pellet.y));
         if ((check - player.radius - pellet.radius) < 1) {
             pellets.splice(i, 1)
+            document.getElementById('eatfruit').play()
             score += 10
             scoreEl.innerHTML = score
         }
