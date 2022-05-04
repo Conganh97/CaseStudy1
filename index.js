@@ -26,10 +26,6 @@ const keys = {
     }
 }
 addEventListener('keydown',musisPlay)
-function musisPlay(){
-    document.getElementById('start').play()
-    removeEventListener('keydown', musisPlay)
-}
 
 let lastKey = ''
 let score = 0
@@ -114,8 +110,5 @@ map.forEach ((row,i) =>{
         }
     })
 })
-
-
 animate()
-
 player.draw()
