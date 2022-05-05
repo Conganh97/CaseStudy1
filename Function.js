@@ -76,6 +76,7 @@ function animate () {
                 document.getElementById('lose').play()
                 cancelAnimationFrame(animationId)
                 alert('You lose')
+                location.reload()
             }
         }
     }
@@ -83,7 +84,9 @@ function animate () {
     if (pellets.length === 0 ){
         document.getElementById('win').play()
         alert('You win')
-        cancelAnimationFrame(animationId)}
+        cancelAnimationFrame(animationId)
+    location.reload()}
+
 // vẽ power up và ăn
     for (let i = powerUps.length - 1; 0 <= i; i--) {
         const powerUp = powerUps[i]
